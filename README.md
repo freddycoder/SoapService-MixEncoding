@@ -4,7 +4,7 @@ This was a use case when translating a Java service into a .Net. The java implem
 
 ## Presentation
 
-When reading the body stream of the message éÃ©é the quivalent in hex is E9 C3 A9 E9 where E9 is the unicode for é and C3 A9 is the UTF-8 for é. By checking two range, both encoding can be use when it's appropriate.
+When reading the body stream of the message éÃ©é the equivalent in hex is E9 C3 A9 E9 where E9 is the unicode for é and C3 A9 is the UTF-8 for é. By checking two range, both encoding can be use when it's appropriate.
 
 The Program.cs file contain the for loop and the if else necessary.
 
