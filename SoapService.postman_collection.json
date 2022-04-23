@@ -2714,6 +2714,180 @@
 			]
 		},
 		{
+			"name": "UTF-8",
+			"item": [
+				{
+					"name": "Scan UTF-8",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var previousValue = pm.variables.get(\"one_ascii\");\r",
+									"\r",
+									"if (pm.variables.get(\"utf8_first_iteration\") == undefined) {\r",
+									"    previousValue = undefined;\r",
+									"    pm.variables.set(\"utf8_first_iteration\", false);\r",
+									"}\r",
+									"\r",
+									"if (previousValue && previousValue.charCodeAt(0) >= 128) {\r",
+									"    previousValue = previousValue.charCodeAt(0);\r",
+									"    previousValue++;\r",
+									"\r",
+									"    /* Manage exclusions */\r",
+									"    if (previousValue == 38 || previousValue == 60 || previousValue == 62 || previousValue == 127 || previousValue == 160) {\r",
+									"        previousValue++;\r",
+									"    }\r",
+									"}\r",
+									"else {\r",
+									"    previousValue = 128;\r",
+									"}\r",
+									"\r",
+									"pm.variables.set(\"one_ascii\", String.fromCharCode(previousValue));\r",
+									"pm.variables.set(\"one_utf8\", getUtf8(previousValue));\r",
+									"\r",
+									"function getUtf8(decimal) {\r",
+									"    if (decimal < 128) {\r",
+									"        return decimal;\r",
+									"    }\r",
+									"\r",
+									"    if (decimal <= 191) // 0xBF\r",
+									"    {\r",
+									"        return String.fromCharCode(194) + String.fromCharCode(decimal);\r",
+									"    }\r",
+									"\r",
+									"    return String.fromCharCode(195) + String.fromCharCode(decimal - 64);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"var oneAscii = pm.variables.get(\"one_ascii\");\r",
+									"\r",
+									"pm.test(\"Value are the same (\" + oneAscii + \")\", () => {\r",
+									"    pm.expect(text).to.eq(oneAscii);\r",
+									"});\r",
+									"\r",
+									"if (oneAscii.charCodeAt(0) < 255) {\r",
+									"    pm.expect(testNextChar()).to.be.true;\r",
+									"}\r",
+									"\r",
+									"function testNextChar() {\r",
+									"    postman.setNextRequest(\"Scan UTF-8\");\r",
+									"    return true;\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_utf8}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "0xA0 No-break space",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Value are the same\", () => {\r",
+									"    pm.expect(text).to.be.undefined;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"one_utf8\", String.fromCharCode(194) + String.fromCharCode(160));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_utf8}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						},
+						"description": "This is the reference character in xml, it it not valide writen alone like in this test."
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Archives",
 			"item": [
 				{

@@ -27,7 +27,7 @@ app.UseDeveloperExceptionPage()
        {
            var c = (byte)body[i];
 
-           if (c >= 0xC3 && c <= 0xC4 && 
+           if (c >= 0xC2 && c <= 0xC3 && 
                i + 1 < body.Length &&
                body[i + 1] >= 0x80 && body[i + 1] <= 0xBF)
            {
