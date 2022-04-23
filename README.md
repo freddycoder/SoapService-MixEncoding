@@ -10,4 +10,4 @@ The Program.cs file contain the for loop and the if else necessary.
 
 ## Note on the postman test
 
-See the postman collection to look at what happend to every character from 0 to 255 and every utf-8 from C2 80 to C3 BF.
+See the postman collection to look at what happend to every character from 00 to FF and every utf-8 from 21 to C3 BF where the critical range is C2 80 to C3 BF.
