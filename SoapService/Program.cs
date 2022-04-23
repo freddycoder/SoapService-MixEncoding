@@ -13,8 +13,6 @@ var app = builder.Build();
 app.UseDeveloperExceptionPage()
    .Use(async (context, next) =>
    {
-       context.Request.EnableBuffering();
-
        using var streamReader = new StreamReader(context.Request.Body);
 
        var body = await streamReader.ReadToEndAsync();

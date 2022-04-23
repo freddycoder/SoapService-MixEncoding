@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <mysoapaction xmlns="http://tempuri.org/">
+      <contractModel xmlns:a="http://schemas.datacontract.org/2004/07/" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <a:Message>161	A1	¡162	A2	¢163	A3	£164	A4	¤165	A5	¥166	A6	¦167	A7	§168	A8	¨169	A9	©170	AA	ª171	AB	«172	AC	¬173	AD	­174	AE	®175	AF	¯176	B0	°177	B1	±178	B2	²179	B3	³180	B4	´181	B5	µ182	B6	¶183	B7	·184	B8	¸185	B9	¹186	BA	º187	BB	»188	BC	¼189	BD	½190	BE	¾191	BF	¿192	C0	À193	C1	Á194	C2	Â195	C3	Ã196	C4	Ä197	C5	Å198	C6	Æ199	C7	Ç200	C8	È201	C9	É202	CA	Ê203	CB	Ë204	CC	Ì205	CD	Í206	CE	Î207	CF	Ï208	D0	Ð209	D1	Ñ210	D2	Ò211	D3	Ó212	D4	Ô213	D5	Õ214	D6	Ö215	D7	×216	D8	Ø217	D9	Ù218	DA	Ú219	DB	Û220	DC	Ü221	DD	Ý222	DE	Þ223	DF	ß224	E0	à225	E1	á226	E2	â227	E3	ã228	E4	ä229	E5	å230	E6	æ231	E7	ç232	E8	è233	E9	é234	EA	ê235	EB	ë236	EC	ì237	ED	í238	EE	î239	EF	ï240	F0	ð241	F1	ñ242	F2	ò243	F3	ó244	F4	ô245	F5	õ246	F6	ö247	F7	÷248	F8	ø249	F9	ù250	FA	ú251	FB	û252	FC	ü253	FD	ý254	FE	þ255	FF	ÿ</a:Message>
+      </contractModel>
+    </mysoapaction>
+  </s:Body>
+</s:Envelope>

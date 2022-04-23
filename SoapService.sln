@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoapService", "SoapService\SoapService.csproj", "{EBA8A8BC-67D6-4EB0-86C5-2FF8C446EE35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoapService", "SoapService\SoapService.csproj", "{EBA8A8BC-67D6-4EB0-86C5-2FF8C446EE35}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBomberTest", "NBomberTest\NBomberTest.csproj", "{A1D4702D-D911-440D-9BCD-5AC94041CCC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EBA8A8BC-67D6-4EB0-86C5-2FF8C446EE35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBA8A8BC-67D6-4EB0-86C5-2FF8C446EE35}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBA8A8BC-67D6-4EB0-86C5-2FF8C446EE35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1D4702D-D911-440D-9BCD-5AC94041CCC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1D4702D-D911-440D-9BCD-5AC94041CCC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1D4702D-D911-440D-9BCD-5AC94041CCC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D4702D-D911-440D-9BCD-5AC94041CCC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
