@@ -10,4 +10,4 @@ The Program.cs file contain the for loop and the if else necessary.
 
 ## Note on the postman test
 
-Not every character is send because many are not a valide use case and broke the XmlDeserialization later on.
+See the postman collection to look at what happend to every character from 0 to 255.
