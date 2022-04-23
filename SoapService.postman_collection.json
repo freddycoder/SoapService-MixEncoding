@@ -6,351 +6,3064 @@
 	},
 	"item": [
 		{
-			"name": "Test 1",
-			"event": [
+			"name": "ASCII",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var xml = xml2Json(pm.response.text())\r",
-							"\r",
-							"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
-							"\r",
-							"pm.test(\"Message is ééé\", () => {\r",
-							"    pm.expect(text).to.eq(\"ééé\")\r",
-							"})"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {}
-			},
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "SoapAction",
-						"value": "\"http://mysoapaction\"",
-						"type": "text"
-					},
-					{
-						"key": "Content-Type",
-						"value": "text/xml",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>éÃ©é</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
-					"options": {
-						"raw": {
-							"language": "xml"
+					"name": "Undeserializable",
+					"item": [
+						{
+							"name": "0x00",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x00 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(0));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x01",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x01 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(1));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x02",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x02 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(2));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x03",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x03 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(3));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x04",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x04 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(4));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x05",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x05 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(5));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x06",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x06 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(6));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x07",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x07 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(7));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x08",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x08 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(8));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x0B",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x0B is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(11));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x0C",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x0C is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(12));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x0E",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x0E is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(14));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x0F",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x0F is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(15));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x10",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x10 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(16));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x11",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x11 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(17));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x12",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x12 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(18));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x13",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x13 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(19));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x14",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x14 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(20));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x15",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x15 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(21));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x16",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x16 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(22));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x17",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x17 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(23));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x18",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x18 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(24));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x19",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x19 is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(25));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x1A",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x1A is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(26));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x1B",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x1B is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(27));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x1C",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x1C is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(28));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x1D",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x1D is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(29));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x1E",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x1E is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(30));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x1F",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"The byte 0x1F is not valid at this location. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(31));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x26 - &",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"Unexpected end of file. Following elements are not closed: Message, contractModel, mysoapaction, Body, Envelope. Line 5, position 14.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", \"&\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								},
+								"description": "This is the reference character in xml, it it not valide writen alone like in this test."
+							},
+							"response": []
 						}
-					}
-				},
-				"url": {
-					"raw": "https://localhost:7180/Endpoint.svc",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "7180",
-					"path": [
-						"Endpoint.svc"
 					]
+				},
+				{
+					"name": "Spaces",
+					"item": [
+						{
+							"name": "0x09 Horizontal tab",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+											"\r",
+											"pm.test(\"Value are the same\", () => {\r",
+											"    pm.expect(text).to.be.undefined;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(9));\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x0A New line",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+											"\r",
+											"pm.test(\"Value are the same\", () => {\r",
+											"    pm.expect(text).to.be.undefined;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(10));\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x0D Carrige return",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+											"\r",
+											"pm.test(\"Value are the same\", () => {\r",
+											"    pm.expect(text).to.be.undefined;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(13));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x20 Space",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+											"\r",
+											"pm.test(\"Value are the same\", () => {\r",
+											"    pm.expect(text).to.be.undefined;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(32));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "0x7F - DEL",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+											"\r",
+											"pm.test(\"Value are the same\", () => {\r",
+											"    pm.expect(text).to.eq(String.fromCharCode(127));\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(127));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								},
+								"description": "This is the reference character in xml, it it not valide writen alone like in this test."
+							},
+							"response": []
+						},
+						{
+							"name": "0xA0 No-break space",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+											"\r",
+											"pm.test(\"Value are the same\", () => {\r",
+											"    pm.expect(text).to.be.undefined;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"one_ascii\", String.fromCharCode(160));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								},
+								"description": "This is the reference character in xml, it it not valide writen alone like in this test."
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Special Xml Character",
+					"item": [
+						{
+							"name": "&gt;",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+											"\r",
+											"pm.test(\"Value are the same\", () => {\r",
+											"    pm.expect(text).to.eq(\">\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>&gt;</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "&lt;",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+											"\r",
+											"pm.test(\"Value are the same\", () => {\r",
+											"    pm.expect(text).to.eq(\"<\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>&lt;</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Loop all ASCII",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"var oneAscii = pm.variables.get(\"one_ascii\");\r",
+									"\r",
+									"pm.test(\"Value are the same (\" + oneAscii + \")\", () => {\r",
+									"    pm.expect(text).to.eq(oneAscii);\r",
+									"});\r",
+									"\r",
+									"if (oneAscii.charCodeAt(0) < 255) {\r",
+									"    pm.expect(testNextChar()).to.be.true;\r",
+									"}\r",
+									"\r",
+									"function testNextChar() {\r",
+									"    postman.setNextRequest(\"Loop all ASCII\");\r",
+									"    return true;\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var previousValue = pm.variables.get(\"one_ascii\");\r",
+									"\r",
+									"if (pm.variables.get(\"first_iteration\") == undefined) {\r",
+									"    previousValue = undefined;\r",
+									"    pm.variables.set(\"first_iteration\", false);\r",
+									"}\r",
+									"\r",
+									"if (previousValue && previousValue.charCodeAt(0) >= 33) {\r",
+									"    previousValue = previousValue.charCodeAt(0);\r",
+									"    previousValue++;\r",
+									"\r",
+									"    /* Manage exclusions */\r",
+									"    if (previousValue == 38 || previousValue == 60 || previousValue == 62 || previousValue == 127 || previousValue == 160) {\r",
+									"        previousValue++;\r",
+									"    }\r",
+									"}\r",
+									"else {\r",
+									"    previousValue = 33;\r",
+									"}\r",
+									"\r",
+									"pm.variables.set(\"one_ascii\", String.fromCharCode(previousValue));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{one_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Test \"",
-			"event": [
+			"name": "Archives",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var xml = xml2Json(pm.response.text())\r",
-							"\r",
-							"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
-							"\r",
-							"pm.test(\"Message is \\\"\", () => {\r",
-							"    pm.expect(text).to.eq('\"')\r",
-							"})"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {}
-			},
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "SoapAction",
-						"value": "\"http://mysoapaction\"",
-						"type": "text"
-					},
-					{
-						"key": "Content-Type",
-						"value": "text/xml",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>\"</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
-					"options": {
-						"raw": {
-							"language": "xml"
+					"name": "Test 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is ééé\", () => {\r",
+									"    pm.expect(text).to.eq(\"ééé\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "https://localhost:7180/Endpoint.svc",
-					"protocol": "https",
-					"host": [
-						"localhost"
 					],
-					"port": "7180",
-					"path": [
-						"Endpoint.svc"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Test '",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var xml = xml2Json(pm.response.text())\r",
-							"\r",
-							"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
-							"\r",
-							"pm.test(\"Message is '\", () => {\r",
-							"    pm.expect(text).to.eq(\"'\")\r",
-							"})"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {}
-			},
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "SoapAction",
-						"value": "\"http://mysoapaction\"",
-						"type": "text"
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
 					},
-					{
-						"key": "Content-Type",
-						"value": "text/xml",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>'</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
-					"options": {
-						"raw": {
-							"language": "xml"
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>éÃ©é</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "https://localhost:7180/Endpoint.svc",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "7180",
-					"path": [
-						"Endpoint.svc"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Test ASCII Table",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var xml = xml2Json(pm.response.text())\r",
-							"\r",
-							"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
-							"\r",
-							"var cleanExpected = text.replace('\\r', '').replace('\\n', '');\r",
-							"var cleanActual = pm.variables.get('table_ascii').replace('\\r', '').replace('\\n', '');\r",
-							"\r",
-							"pm.test(\"Cleaned value have the same size\", () => {\r",
-							"    pm.expect(cleanExpected.length).to.eq(cleanActual.length);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Message is ASCII Table\", () => {\r",
-							"    pm.expect(cleanExpected).to.eq(cleanActual);\r",
-							"});\r",
-							"\r",
-							"for (var i = 0; i < cleanActual.length && i < cleanExpected.length; i++) \r",
-							"{\r",
-							"    if (cleanExpected[i] != cleanActual[i]) {\r",
-							"        console.log(\"First diff on char \" + i);\r",
-							"        console.log(\"Char actual is: \" + cleanExpected[i]);\r",
-							"        console.log(\"Char expected is: \" + cleanActual[i]);\r",
-							"        break;\r",
-							"    }\r",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"pm.variables.set(\"table_ascii\", `0\t00\tNUL1\t01\tSOH2\t02\tSTX3\t03\tETX4\t04\tEOT5\t05\tENQ6\t06\tACK7\t07\tBEL8\t08\tBS9\t09\tHT10\t0A\tLF11\t0B\tVT12\t0C\tFF13\t0D\tCR14\t0E\tSO15\t0F\tSI16\t10\tDLE17\t11\tDC118\t12\tDC219\t13\tDC320\t14\tDC421\t15\tNAK22\t16\tSYN23\t17\tETB24\t18\tCAN25\t19\tEM26\t1A\tSUB27\t1B\tESC28\t1C\tFS29\t1D\tGS30\t1E\tRS31\t1F\tUS32\t20\tspace33\t21\t!34\t22\t\"35\t23\t#36\t24\t$37\t25\t%39\t27\t'40\t28\t(41\t29\t)42\t2A\t*43\t2B\t+44\t2C\t,45\t2D\t-46\t2E\t.47\t2F\t/48\t30\t049\t31\t150\t32\t251\t33\t352\t34\t453\t35\t554\t36\t655\t37\t756\t38\t857\t39\t958\t3A\t:59\t3B\t;61\t3D\t=63\t3F\t?64\t40\t@65\t41\tA66\t42\tB67\t43\tC68\t44\tD69\t45\tE70\t46\tF71\t47\tG72\t48\tH73\t49\tI74\t4A\tJ75\t4B\tK76\t4C\tL77\t4D\tM78\t4E\tN79\t4F\tO80\t50\tP81\t51\tQ82\t52\tR83\t53\tS84\t54\tT85\t55\tU86\t56\tV87\t57\tW88\t58\tX89\t59\tY90\t5A\tZ91\t5B\t[92\t5C\t\\\\93\t5D\t]94\t5E\t^95\t5F\t_96\t60\t\\`97\t61\ta98\t62\tb99\t63\tc100\t64\td101\t65\te102\t66\tf103\t67\tg104\t68\th105\t69\ti106\t6A\tj107\t6B\tk108\t6C\tl109\t6D\tm110\t6E\tn111\t6F\to112\t70\tp113\t71\tq114\t72\tr115\t73\ts116\t74\tt117\t75\tu118\t76\tv119\t77\tw120\t78\tx121\t79\ty122\t7A\tz123\t7B\t{124\t7C\t|125\t7D\t}126\t7E\t~127\t7F\tDEL`)"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {}
-			},
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "SoapAction",
-						"value": "\"http://mysoapaction\"",
-						"type": "text"
 					},
-					{
-						"key": "Content-Type",
-						"value": "text/xml",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{table_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
-					"options": {
-						"raw": {
-							"language": "xml"
+					"response": []
+				},
+				{
+					"name": "Test \"",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is \\\"\", () => {\r",
+									"    pm.expect(text).to.eq('\"')\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "https://localhost:7180/Endpoint.svc",
-					"protocol": "https",
-					"host": [
-						"localhost"
 					],
-					"port": "7180",
-					"path": [
-						"Endpoint.svc"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Test ASCII extended",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var xml = xml2Json(pm.response.text())\r",
-							"\r",
-							"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
-							"\r",
-							"var cleanExpected = text.replace('\\r', '').replace('\\n', '');\r",
-							"var cleanActual = pm.variables.get('table_ascii').replace('\\r', '').replace('\\n', '');\r",
-							"\r",
-							"pm.test(\"Cleaned value have the same size\", () => {\r",
-							"    pm.expect(cleanExpected.length).to.eq(cleanActual.length);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Message is ASCII Table\", () => {\r",
-							"    pm.expect(cleanExpected).to.eq(cleanActual);\r",
-							"});\r",
-							"\r",
-							"for (var i = 0; i < cleanActual.length && i < cleanExpected.length; i++) \r",
-							"{\r",
-							"    if (cleanExpected[i] != cleanActual[i]) {\r",
-							"        console.log(\"First diff on char \" + i);\r",
-							"        console.log(\"Char actual is: \" + cleanExpected[i]);\r",
-							"        console.log(\"Char expected is: \" + cleanActual[i]);\r",
-							"        break;\r",
-							"    }\r",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"pm.variables.set(\"table_ascii\", `161\tA1\t¡162\tA2\t¢163\tA3\t£164\tA4\t¤165\tA5\t¥166\tA6\t¦167\tA7\t§168\tA8\t¨169\tA9\t©170\tAA\tª171\tAB\t«172\tAC\t¬173\tAD\t­174\tAE\t®175\tAF\t¯176\tB0\t°177\tB1\t±178\tB2\t²179\tB3\t³180\tB4\t´181\tB5\tµ182\tB6\t¶183\tB7\t·184\tB8\t¸185\tB9\t¹186\tBA\tº187\tBB\t»188\tBC\t¼189\tBD\t½190\tBE\t¾191\tBF\t¿192\tC0\tÀ193\tC1\tÁ194\tC2\tÂ195\tC3\tÃ196\tC4\tÄ197\tC5\tÅ198\tC6\tÆ199\tC7\tÇ200\tC8\tÈ201\tC9\tÉ202\tCA\tÊ203\tCB\tË204\tCC\tÌ205\tCD\tÍ206\tCE\tÎ207\tCF\tÏ208\tD0\tÐ209\tD1\tÑ210\tD2\tÒ211\tD3\tÓ212\tD4\tÔ213\tD5\tÕ214\tD6\tÖ215\tD7\t×216\tD8\tØ217\tD9\tÙ218\tDA\tÚ219\tDB\tÛ220\tDC\tÜ221\tDD\tÝ222\tDE\tÞ223\tDF\tß224\tE0\tà225\tE1\tá226\tE2\tâ227\tE3\tã228\tE4\tä229\tE5\tå230\tE6\tæ231\tE7\tç232\tE8\tè233\tE9\té234\tEA\tê235\tEB\të236\tEC\tì237\tED\tí238\tEE\tî239\tEF\tï240\tF0\tð241\tF1\tñ242\tF2\tò243\tF3\tó244\tF4\tô245\tF5\tõ246\tF6\tö247\tF7\t÷248\tF8\tø249\tF9\tù250\tFA\tú251\tFB\tû252\tFC\tü253\tFD\tý254\tFE\tþ255\tFF\tÿ`)"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {}
-			},
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "SoapAction",
-						"value": "\"http://mysoapaction\"",
-						"type": "text"
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
 					},
-					{
-						"key": "Content-Type",
-						"value": "text/xml",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{table_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
-					"options": {
-						"raw": {
-							"language": "xml"
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>\"</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "https://localhost:7180/Endpoint.svc",
-					"protocol": "https",
-					"host": [
-						"localhost"
+				{
+					"name": "Test '",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is '\", () => {\r",
+									"    pm.expect(text).to.eq(\"'\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
 					],
-					"port": "7180",
-					"path": [
-						"Endpoint.svc"
-					]
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>'</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test ASCII Table",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"var cleanExpected = text.replace('\\r', '').replace('\\n', '');\r",
+									"var cleanActual = pm.variables.get('table_ascii').replace('\\r', '').replace('\\n', '');\r",
+									"\r",
+									"pm.test(\"Cleaned value have the same size\", () => {\r",
+									"    pm.expect(cleanExpected.length).to.eq(cleanActual.length);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is ASCII Table\", () => {\r",
+									"    pm.expect(cleanExpected).to.eq(cleanActual);\r",
+									"});\r",
+									"\r",
+									"for (var i = 0; i < cleanActual.length && i < cleanExpected.length; i++) \r",
+									"{\r",
+									"    if (cleanExpected[i] != cleanActual[i]) {\r",
+									"        console.log(\"First diff on char \" + i);\r",
+									"        console.log(\"Char actual is: \" + cleanExpected[i]);\r",
+									"        console.log(\"Char expected is: \" + cleanActual[i]);\r",
+									"        break;\r",
+									"    }\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"table_ascii\", `0\t00\tNUL1\t01\tSOH2\t02\tSTX3\t03\tETX4\t04\tEOT5\t05\tENQ6\t06\tACK7\t07\tBEL8\t08\tBS9\t09\tHT10\t0A\tLF11\t0B\tVT12\t0C\tFF13\t0D\tCR14\t0E\tSO15\t0F\tSI16\t10\tDLE17\t11\tDC118\t12\tDC219\t13\tDC320\t14\tDC421\t15\tNAK22\t16\tSYN23\t17\tETB24\t18\tCAN25\t19\tEM26\t1A\tSUB27\t1B\tESC28\t1C\tFS29\t1D\tGS30\t1E\tRS31\t1F\tUS32\t20\tspace33\t21\t!34\t22\t\"35\t23\t#36\t24\t$37\t25\t%39\t27\t'40\t28\t(41\t29\t)42\t2A\t*43\t2B\t+44\t2C\t,45\t2D\t-46\t2E\t.47\t2F\t/48\t30\t049\t31\t150\t32\t251\t33\t352\t34\t453\t35\t554\t36\t655\t37\t756\t38\t857\t39\t958\t3A\t:59\t3B\t;61\t3D\t=63\t3F\t?64\t40\t@65\t41\tA66\t42\tB67\t43\tC68\t44\tD69\t45\tE70\t46\tF71\t47\tG72\t48\tH73\t49\tI74\t4A\tJ75\t4B\tK76\t4C\tL77\t4D\tM78\t4E\tN79\t4F\tO80\t50\tP81\t51\tQ82\t52\tR83\t53\tS84\t54\tT85\t55\tU86\t56\tV87\t57\tW88\t58\tX89\t59\tY90\t5A\tZ91\t5B\t[92\t5C\t\\\\93\t5D\t]94\t5E\t^95\t5F\t_96\t60\t\\`97\t61\ta98\t62\tb99\t63\tc100\t64\td101\t65\te102\t66\tf103\t67\tg104\t68\th105\t69\ti106\t6A\tj107\t6B\tk108\t6C\tl109\t6D\tm110\t6E\tn111\t6F\to112\t70\tp113\t71\tq114\t72\tr115\t73\ts116\t74\tt117\t75\tu118\t76\tv119\t77\tw120\t78\tx121\t79\ty122\t7A\tz123\t7B\t{124\t7C\t|125\t7D\t}126\t7E\t~127\t7F\tDEL`)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{table_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test ASCII extended",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"var cleanExpected = text.replace('\\r', '').replace('\\n', '');\r",
+									"var cleanActual = pm.variables.get('table_ascii').replace('\\r', '').replace('\\n', '');\r",
+									"\r",
+									"pm.test(\"Cleaned value have the same size\", () => {\r",
+									"    pm.expect(cleanExpected.length).to.eq(cleanActual.length);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is ASCII Table\", () => {\r",
+									"    pm.expect(cleanExpected).to.eq(cleanActual);\r",
+									"});\r",
+									"\r",
+									"for (var i = 0; i < cleanActual.length && i < cleanExpected.length; i++) \r",
+									"{\r",
+									"    if (cleanExpected[i] != cleanActual[i]) {\r",
+									"        console.log(\"First diff on char \" + i);\r",
+									"        console.log(\"Char actual is: \" + cleanExpected[i]);\r",
+									"        console.log(\"Char expected is: \" + cleanActual[i]);\r",
+									"        break;\r",
+									"    }\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"table_ascii\", `161\tA1\t¡162\tA2\t¢163\tA3\t£164\tA4\t¤165\tA5\t¥166\tA6\t¦167\tA7\t§168\tA8\t¨169\tA9\t©170\tAA\tª171\tAB\t«172\tAC\t¬173\tAD\t­174\tAE\t®175\tAF\t¯176\tB0\t°177\tB1\t±178\tB2\t²179\tB3\t³180\tB4\t´181\tB5\tµ182\tB6\t¶183\tB7\t·184\tB8\t¸185\tB9\t¹186\tBA\tº187\tBB\t»188\tBC\t¼189\tBD\t½190\tBE\t¾191\tBF\t¿192\tC0\tÀ193\tC1\tÁ194\tC2\tÂ195\tC3\tÃ196\tC4\tÄ197\tC5\tÅ198\tC6\tÆ199\tC7\tÇ200\tC8\tÈ201\tC9\tÉ202\tCA\tÊ203\tCB\tË204\tCC\tÌ205\tCD\tÍ206\tCE\tÎ207\tCF\tÏ208\tD0\tÐ209\tD1\tÑ210\tD2\tÒ211\tD3\tÓ212\tD4\tÔ213\tD5\tÕ214\tD6\tÖ215\tD7\t×216\tD8\tØ217\tD9\tÙ218\tDA\tÚ219\tDB\tÛ220\tDC\tÜ221\tDD\tÝ222\tDE\tÞ223\tDF\tß224\tE0\tà225\tE1\tá226\tE2\tâ227\tE3\tã228\tE4\tä229\tE5\tå230\tE6\tæ231\tE7\tç232\tE8\tè233\tE9\té234\tEA\tê235\tEB\të236\tEC\tì237\tED\tí238\tEE\tî239\tEF\tï240\tF0\tð241\tF1\tñ242\tF2\tò243\tF3\tó244\tF4\tô245\tF5\tõ246\tF6\tö247\tF7\t÷248\tF8\tø249\tF9\tù250\tFA\tú251\tFB\tû252\tFC\tü253\tFD\tý254\tFE\tþ255\tFF\tÿ`)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{table_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }
