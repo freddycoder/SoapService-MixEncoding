@@ -23,22 +23,29 @@ app.UseDeveloperExceptionPage()
 
        for (int i = 0; i < body.Length; i++)
        {
-           var c = (byte)body[i];
-
-           if (c >= 0xC2 && c <= 0xC3 && 
-               i + 1 < body.Length &&
-               body[i + 1] >= 0x80 && body[i + 1] <= 0xBF)
+           if (body[i] > 0xFF)
            {
-               two_spaces_array[0] = c;
-               two_spaces_array[1] = (byte)body[i + 1];
-               var s = Encoding.UTF8.GetString(two_spaces_array);
-               builder.Append(s);
-               i++;
+               builder.Append(body[i]);
            }
            else
            {
-               var c3 = (char)c;
-               builder.Append(c3);
+               var c = (byte)body[i];
+
+               if (c >= 0xC2 && c <= 0xC3 &&
+                   i + 1 < body.Length &&
+                   body[i + 1] >= 0x80 && body[i + 1] <= 0xBF)
+               {
+                   two_spaces_array[0] = c;
+                   two_spaces_array[1] = (byte)body[i + 1];
+                   var s = Encoding.UTF8.GetString(two_spaces_array);
+                   builder.Append(s);
+                   i++;
+               }
+               else
+               {
+                   var c3 = (char)c;
+                   builder.Append(c3);
+               }
            }
        }
 

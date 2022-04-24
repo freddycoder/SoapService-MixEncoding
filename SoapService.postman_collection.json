@@ -2714,7 +2714,7 @@
 			]
 		},
 		{
-			"name": "UTF-8",
+			"name": "UTF-8 (basic latin)",
 			"item": [
 				{
 					"name": "Scan UTF-8",
@@ -2885,6 +2885,1786 @@
 							]
 						},
 						"description": "This is the reference character in xml, it it not valide writen alone like in this test."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UTF-8 (other that basic latin)",
+			"item": [
+				{
+					"name": "Undeserealizable",
+					"item": [
+						{
+							"name": "Test ￾",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"Characters with hexadecimal values 0xFFFE and 0xFFFF are not valid. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>￾</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Test ￿",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var xml = xml2Json(pm.response.text())\r",
+											"\r",
+											"var text = xml[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+											"\r",
+											"pm.test(\"Error message\", () => {\r",
+											"    pm.expect(text).to.eq(\"Characters with hexadecimal values 0xFFFE and 0xFFFF are not valid. Line 1, position 244.\")\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "SoapAction",
+										"value": "\"http://mysoapaction\"",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>￿</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7180/Endpoint.svc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7180",
+									"path": [
+										"Endpoint.svc"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Test Ā",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is Ā\", () => {\r",
+									"    pm.expect(text).to.eq(\"Ā\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>Ā</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Ł",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is Ł\", () => {\r",
+									"    pm.expect(text).to.eq(\"Ł\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>Ł</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Ƣ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is Ƣ\", () => {\r",
+									"    pm.expect(text).to.eq(\"Ƣ\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>Ƣ</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Ǎ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is Ǎ\", () => {\r",
+									"    pm.expect(text).to.eq(\"Ǎ\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>Ǎ</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test ǿ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is ǿ\", () => {\r",
+									"    pm.expect(text).to.eq(\"ǿ\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>ǿ</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test ƀ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is ƀ\", () => {\r",
+									"    pm.expect(text).to.eq(\"ƀ\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>ƀ</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test ɿ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is ɿ\", () => {\r",
+									"    pm.expect(text).to.eq(\"ɿ\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>ɿ</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test ɐ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is ɐ\", () => {\r",
+									"    pm.expect(text).to.eq(\"ɐ\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>ɐ</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test ̀",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is ɐ̀\", () => {\r",
+									"    pm.expect(text).to.eq(\"ɐ̀\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>ɐ̀</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Ͽ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is Ͽ\", () => {\r",
+									"    pm.expect(text).to.eq(\"Ͽ\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>Ͽ</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Ͱ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is Ͱ\", () => {\r",
+									"    pm.expect(text).to.eq(\"Ͱ\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>Ͱ</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test ѯ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is ѯ\", () => {\r",
+									"    pm.expect(text).to.eq(\"ѯ\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>ѯ</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Ѐ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is Ѐ\", () => {\r",
+									"    pm.expect(text).to.eq(\"Ѐ\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>Ѐ</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test ӿ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is ӿ\", () => {\r",
+									"    pm.expect(text).to.eq(\"ӿ\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>ӿ</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Ԁ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is Ԁ\", () => {\r",
+									"    pm.expect(text).to.eq(\"Ԁ\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>Ԁ</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test ״",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is ״\", () => {\r",
+									"    pm.expect(text).to.eq(\"״\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>״</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test ׿",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is ׿\", () => {\r",
+									"    pm.expect(text).to.eq(\"׿\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>׿</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test د",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is د\", () => {\r",
+									"    pm.expect(text).to.eq(\"د\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>د</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test ࢽ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is ࢽ\", () => {\r",
+									"    pm.expect(text).to.eq(\"ࢽ\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>ࢽ</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test �",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is �\", () => {\r",
+									"    pm.expect(text).to.eq(\"�\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>�</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test 𐀀",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is 𐀀\", () => {\r",
+									"    pm.expect(text).to.eq(\"𐀀\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>𐀀</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test 𐃯",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is 𐃯\", () => {\r",
+									"    pm.expect(text).to.eq(\"𐃯\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>𐃯</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test 𐭿",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is 𐭿\", () => {\r",
+									"    pm.expect(text).to.eq(\"𐭿\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>𐭿</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test \t𑀯",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is 𑀯\", () => {\r",
+									"    pm.expect(text).to.eq(\"𑀯\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>𑀯</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test 𝇛",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is 𝇛\", () => {\r",
+									"    pm.expect(text).to.eq(\"𝇛\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>𝇛</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test 🪲",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is 🪲\", () => {\r",
+									"    pm.expect(text).to.eq(\"🪲\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>🪲</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test 󰃼",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is 󰃼\", () => {\r",
+									"    pm.expect(text).to.eq(\"󰃼\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>󰃼</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test 􀃿",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is 􀃿\", () => {\r",
+									"    pm.expect(text).to.eq(\"􀃿\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>􀃿</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
 					},
 					"response": []
 				}
@@ -3220,6 +5000,74 @@
 						"body": {
 							"mode": "raw",
 							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{table_ascii}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7180/Endpoint.svc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7180",
+							"path": [
+								"Endpoint.svc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Random Lorem Paragraph",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xml = xml2Json(pm.response.text())\r",
+									"\r",
+									"var text = xml[\"s:Envelope\"][\"s:Body\"][\"mysoapactionResponse\"][\"mysoapactionResult\"][\"Message\"]._\r",
+									"\r",
+									"pm.test(\"Message is some lorem\", () => {\r",
+									"    pm.expect(text).to.eq(pm.variables.get(\"some_lorem\"));\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"some_lorem\", pm.variables.replaceIn(\"{{$randomLoremParagraph}}\"))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "SoapAction",
+								"value": "\"http://mysoapaction\"",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <s:Body>\r\n        <mysoapaction xmlns=\"http://tempuri.org/\">\r\n            <contractModel xmlns:a=\"http://schemas.datacontract.org/2004/07/\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n                <a:Message>{{some_lorem}}</a:Message>\r\n            </contractModel>\r\n        </mysoapaction>\r\n    </s:Body>\r\n</s:Envelope>",
 							"options": {
 								"raw": {
 									"language": "xml"
