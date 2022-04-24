@@ -36,10 +36,9 @@ app.UseDeveloperExceptionPage()
                    body[i + 1] >= 0x80 && body[i + 1] <= 0xBF)
                {
                    two_spaces_array[0] = c;
-                   two_spaces_array[1] = (byte)body[i + 1];
+                   two_spaces_array[1] = (byte)body[++i];
                    var s = Encoding.UTF8.GetString(two_spaces_array);
                    builder.Append(s);
-                   i++;
                }
                else
                {
